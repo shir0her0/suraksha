@@ -18,13 +18,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-<<<<<<< HEAD
-          aws-secret-access-key: ${{secrets.AWS_SECRET_ACCESS_KEY}}
-=======
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-
->>>>>>> 2bf2c63 (YAML for CI/CD in S3 buckets)
-          aws-region: ap-south-1  # change if your bucket is in another region
+          aws-region: ap-south-1 
 
       - name: Sync files to S3
         run: |
