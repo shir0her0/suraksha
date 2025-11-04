@@ -1,6 +1,6 @@
 # SURAKSHA — Login Simulation (Research & Education)
 
-Single-page simulation mimicking Google's sign-in design language to collect behavioral signals for passive CAPTCHA research. This project focuses on privacy-preserving client-side obfuscation and derived feature collection. Raw credentials are never sent to the backend.
+Single-page Sign in simulation to collect behavioral signals, browser/device data and environmental variables for passive CAPTCHA research. This project focuses on privacy-preserving client-side obfuscation and derived feature collection. Raw credentials are never sent to the backend.
 
 ## Quick Start
 
@@ -13,7 +13,7 @@ Single-page simulation mimicking Google's sign-in design language to collect beh
 - Purpose: collect behavioral signals for passive CAPTCHA research.
 - Collected: event counts, timing metrics, mouse trajectory stats (speed/accel/entropy/curvature/pause count), click precision, scroll metrics, backspace count, browser header snapshot, optional fingerprint.
 - Handling: raw credentials are not stored; only HMAC-SHA256 hashes (salted with `session_id`) and derived features (length, character classes, entropy estimate) are included.
-- Prominent warning: Do not enter extremely sensitive secrets (bank PINs, 2FA codes). If using real credentials, ensure username/password are for different services and do not match within a single service.
+- Prominent warning: Do not enter extremely sensitive secrets (bank PINs, 2FA codes). If using real credentials, ensure username/password are for different services and do not match within a single service. It is recommended to use random credentials instead; we adivse using the "Create random credentials" option for this purpose.
 - Only consenting adult volunteers should participate.
 
 ## Client Payload Contract
