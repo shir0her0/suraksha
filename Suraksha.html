@@ -117,11 +117,10 @@
       ev.preventDefault();
       // here we should confirm consent, but assume user clicked Next after reading modals
       const consent = true;
-      const sid = uuidv4();
       const taskId = 'typing_task_1';
 
-      // init collectors and get base metadata
-      baseMeta = await initCollectors(sid, taskId, consent);
+      baseMeta = await initCollectors("typing_task_1", consent);
+
 
       // optionally show a small "collecting" UI, then gather after some time or after user finishes task
       // For demo we collect for 10 seconds then send
