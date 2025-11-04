@@ -1,0 +1,46 @@
+{
+  "session_id": "uuid-v4",
+  "consent": true,
+  "timestamp_start": 1690000000000,
+  "timestamp_end": 1690000004500,
+
+  "device": {
+    "hardware_concurrency": 4,
+    "device_memory": 8,
+    "screen": {"width":1366,"height":768,"color_depth":24},
+    "os": "Windows",
+    "browser": "Chrome"
+  },
+
+  "browser_env": {
+    "webdriver": false,
+    "plugin_hash": "2f3g4h",
+    "font_hash": "1a2b3c"
+  },
+
+  "network": {
+    "asn":"AS55836",
+    "effective_type": "4g",
+    "is_vpn_proxy": false
+  },
+
+  "behavior": {
+    "typing_events": [1234],
+    "mouse_samples": [5678],
+    "focus_events": [91011],
+    "paste_events": 0,
+    "scroll_events": 12
+  },
+
+  "derived_features": {
+    "mean_dwell":120.5,
+    "std_dwell":22.3,
+    "mean_flight":180.1,
+    "std_flight":40.2,
+    "burstiness":0.7,
+    "backspace_rate":0.05,
+    "mouse_jitter_score":0.82
+  },
+
+  "label": "human"
+}

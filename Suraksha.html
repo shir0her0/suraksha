@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign In</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="page-wrapper">
+    <div class="signin-card">
+      <div class="left-pane">
+        
+        <div class="placeholder-logo"> <img src="Logo.png" alt="SURAKSHA Logo" class="landing-logo"></div>
+        <h1 class="title">Enter anonymised credentials</h1>
+        <p class="subtitle">to continue to <span class="app-name">particiapte in our data collection process</span></p>
+        <p class="subtitle"></p>
+      </div>
+
+      <div class="right-pane">
+        <form>
+          <div class="input-group">
+            <label for="email">Email or phone</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+
+          <div class="input-group">
+            <label for="email">Password</label>
+            <input type="password" id="email" name="email" required />
+          </div>
+
+          <div class="links">
+            <a href="#">Forgot Email</a>
+          </div>
+
+          <p class="policy">
+            Before using this app, you can review 
+            <a href="#" class="privacy-link">Suraksha’s privacy policy</a> 
+            and <a href="#" class="terms-link">Terms of Service</a>.
+          </p>
+
+          <div class="actions">
+            <a href="#" class="link">Create sample credentials</a>
+            <button type="submit" class="btn primary">Next</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <footer class="footer">
+      <div class="lang-select">English (United Kingdom)</div>
+      <div class="footer-links">
+        <a href="#">Help</a>
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+      </div>
+    </footer>
+  </div>
+    <div id="privacyModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Suraksha Privacy Policy</h2>
+      <p>
+        This is where your privacy policy content goes.
+        You’ll explain what user data (like keystroke timings, typing speed, etc.)
+        you collect, why you collect it, and how users’ consent is handled.
+      </p>
+    </div>
+  </div>
+
+  <div id="termsModal" class="modal">
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Terms of Service</h2>
+      <p>
+        This section includes the app usage terms — what users agree to when they
+        use Suraksha, disclaimers, and data handling responsibilities.
+      </p>
+    </div>
+  </div>
+  <script src="script.js"></script>
+  <script type="module">
+    import { initCollectors, gatherAndSend } from './index.js';
+
+    // Simple helper to generate uuid v4
+    function uuidv4() {
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+          const r = Math.random() * 16 | 0, v = c === 'x' ? r : (r & 0x3 | 0x8);
+          return v.toString(16);
+      });
+    }
+
+    const form = document.querySelector('form');
+    const privacyLink = document.querySelector('.privacy-link');
+    const termsLink = document.querySelector('.terms-link');
+    const privacyModal = document.getElementById('privacyModal');
+    const termsModal = document.getElementById('termsModal');
+
+    // modal open/close handlers
+    document.querySelectorAll('.privacy-link, .terms-link').forEach(el=>{
+      el.addEventListener('click', (e)=>{
+        e.preventDefault();
+        if (el.classList.contains('privacy-link')) privacyModal.style.display = 'flex';
+        else termsModal.style.display = 'flex';
+      });
+    });
+    document.querySelectorAll('.close').forEach(btn=>{
+      btn.addEventListener('click', ()=> {
+        privacyModal.style.display = 'none';
+        termsModal.style.display = 'none';
+      });
+    });
+
+    let baseMeta = null;
+
+    form.addEventListener('submit', async (ev) => {
+      ev.preventDefault();
+      // here we should confirm consent, but assume user clicked Next after reading modals
+      const consent = true;
+      const sid = uuidv4();
+      const taskId = 'typing_task_1';
+
+      // init collectors and get base metadata
+      baseMeta = await initCollectors(sid, taskId, consent);
+
+      // optionally show a small "collecting" UI, then gather after some time or after user finishes task
+      // For demo we collect for 10 seconds then send
+      // show feedback to user:
+      const submitBtn = form.querySelector('button[type="submit"]');
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Collecting...';
+
+      // Wait for e.g., 10 seconds for session activity
+      setTimeout(async () => {
+        const payload = await gatherAndSend(baseMeta, "human");
+        console.log('Sent payload', payload);
+        // redirect or show thanks
+        window.location.href = 'thankyou.html'; // create a simple thank you page or show modal
+      }, 50);
+    });
+  </script>
+</body>
+</html>
+
