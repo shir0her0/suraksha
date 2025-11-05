@@ -1,5 +1,5 @@
 // core/transport.js
-const API_URL = "https://YOUR_API_ENDPOINT.example.com/collect"; // << REPLACE ME
+const API_URL = "https://5ucetmzkr2.execute-api.us-east-1.amazonaws.com/"; // << REPLACE ME
 
 export class Transport {
   constructor() {
