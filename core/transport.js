@@ -1,6 +1,5 @@
 // core/transport.js
-const API_URL = "https://5ucetmzkr2.execute-api.us-east-1.amazonaws.com/"; // << REPLACE ME
-
+const API_URL = "https://59gtln6uf4.execute-api.ap-south-1.amazonaws.com/prod"; // << API Endpoint URL
 export class Transport {
   constructor() {
     this.queue = [];
