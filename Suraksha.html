@@ -114,29 +114,40 @@
     let baseMeta = null;
 
     form.addEventListener('submit', async (ev) => {
-      ev.preventDefault();
-      // here we should confirm consent, but assume user clicked Next after reading modals
-      const consent = true;
-      const taskId = 'typing_task_1';
+  ev.preventDefault();
+  
+  const consent = true;
+  const taskId = 'typing_task_1';
+  const submitBtn = form.querySelector('button[type="submit"]');
 
-      baseMeta = await initCollectors("typing_task_1", consent);
+  // Disable button and start collectors
+  submitBtn.disabled = true;
+  submitBtn.textContent = 'Collecting...';
+  const baseMeta = await initCollectors(taskId, consent);
+
+  // Wait for e.g., 10 seconds to gather typing/mouse data
+  setTimeout(async () => {
+    try {
+      console.log("Gathering data...");
+      const payload = await gatherAndSend(baseMeta, "human");
+
+      console.log("Data successfully sent to backend:", payload);
+
+      // 🔹 Add small delay to ensure network completes cleanly
+      await new Promise(r => setTimeout(r, 1000)); // 1s
+
+      // 🔹 Then redirect
+      window.location.href = 'thankyou.html';
+    } catch (err) {
+      console.error("Error sending payload:", err);
+      alert("Something went wrong while uploading your data. Please try again.");
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Next';
+    }
+  }, 5000); // 5s of data capture
+});
 
 
-      // optionally show a small "collecting" UI, then gather after some time or after user finishes task
-      // For demo we collect for 10 seconds then send
-      // show feedback to user:
-      const submitBtn = form.querySelector('button[type="submit"]');
-      submitBtn.disabled = true;
-      submitBtn.textContent = 'Collecting...';
-
-      // Wait for e.g., 10 seconds for session activity
-      setTimeout(async () => {
-        const payload = await gatherAndSend(baseMeta, "human");
-        console.log('Sent payload', payload);
-        // redirect or show thanks
-        window.location.href = 'thankyou.html'; // create a simple thank you page or show modal
-      }, 10000);
-    });
   </script>
 </body>
 </html>
