@@ -148,6 +148,136 @@
 });
 
   </script>
+  <script type="module">
+      (function () {
+        const sampleLink = document.querySelector(".link"); // "Create sample credentials"
+        const form = document.querySelector("form");
+
+        // Ensure required elements exist
+        if (!sampleLink || !form) {
+          console.warn(
+            "Sample credentials: required elements not found, skipping."
+          );
+          return;
+        }
+
+        // Create container for sample creds display
+        const sampleContainer = document.createElement("div");
+        sampleContainer.id = "sampleCreds";
+        sampleContainer.setAttribute("aria-live", "polite");
+        sampleContainer.style = `
+    margin-bottom: 12px;
+    padding: 12px;
+    border-radius:8px;
+    background:#f7fbff;
+    border:1px solid #e0eefc;
+    font-size:0.95rem;
+    display:none;
+  `;
+
+        sampleContainer.innerHTML = `
+    <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:12px; flex-wrap:wrap;">
+      <div style="flex:1; min-width:220px;">
+        <div style="font-weight:600; margin-bottom:8px;">Sample credentials (type these manually)</div>
+        <div style="font-size:0.95rem; line-height:1.4;">
+          <div><strong>Username:</strong> <span id="sampleUsername" style="font-family:monospace;"></span></div>
+          <div style="margin-top:6px;"><strong>Password:</strong> <span id="samplePassword" style="font-family:monospace;"></span></div>
+        </div>
+        <div style="margin-top:8px; font-size:0.85rem; color:#555;">
+          <em>Do NOT paste — please type these credentials into the fields to capture typing behaviour.</em>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:8px; align-items:center;">
+        <button id="regenSampleBtn" type="button" style="padding:8px 10px; border-radius:6px; border:none; background:#0ea5e9; color:#fff; cursor:pointer;">Regenerate</button>
+        <button id="dismissSampleBtn" type="button" aria-label="Dismiss sample credentials" style="padding:6px 10px; border-radius:6px; border:1px solid #cbd5e1; background:#ffffff; cursor:pointer;">Dismiss</button>
+      </div>
+    </div>
+  `;
+
+        const firstInputGroup = form.querySelector(".input-group");
+        if (firstInputGroup) {
+          firstInputGroup.parentNode.insertBefore(
+            sampleContainer,
+            firstInputGroup
+          );
+        } else {
+          form.insertBefore(sampleContainer, form.firstChild);
+        }
+
+        function randomWord() {
+          const words = [
+            "alpha",
+            "beta",
+            "gamma",
+            "delta",
+            "nova",
+            "echo",
+            "zen",
+            "lumen",
+            "orbit",
+            "pixel",
+            "sigma",
+            "kappa",
+            "tau",
+            "orbit",
+          ];
+          return (
+            words[Math.floor(Math.random() * words.length)] +
+            (Math.floor(Math.random() * 900) + 100)
+          );
+        }
+
+        function randomEmail() {
+          return `${randomWord()}@gmail.com`;
+        }
+
+        function randomPassword(length = 12) {
+          const chars =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()-_=+[]{};:,.<>?";
+          let out = "";
+          for (let i = 0; i < length; i++) {
+            out += chars.charAt(Math.floor(Math.random() * chars.length));
+          }
+          return out;
+        }
+
+        function showSample(email, password) {
+          document.getElementById("sampleUsername").textContent = email;
+          document.getElementById("samplePassword").textContent = password;
+          sampleContainer.style.display = "block";
+        }
+        function hideSample() {
+          sampleContainer.style.display = "none";
+        }
+
+        sampleLink.addEventListener("click", (e) => {
+          e.preventDefault();
+          const email = randomEmail();
+          const pass = randomPassword(12);
+          showSample(email, pass);
+          // do not set input.value, do not focus — let the user type manually
+        });
+
+        sampleContainer
+          .querySelector("#regenSampleBtn")
+          .addEventListener("click", () => {
+            const email = randomEmail();
+            const pass = randomPassword(12);
+            showSample(email, pass);
+          });
+
+        sampleContainer
+          .querySelector("#dismissSampleBtn")
+          .addEventListener("click", () => {
+            hideSample();
+          });
+
+        form.addEventListener("submit", () => {
+          hideSample();
+        });
+      })();
+    </script>
   <script type="module" src="env/fingerprint.js"></script>
   <script type="module" src="core/transport.js?v=2"></script>
 </body>
