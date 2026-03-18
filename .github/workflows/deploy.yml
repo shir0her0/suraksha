@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - fix-sessions-issuestest #change to -main when deploying,this is just for testing newer branches.
+      - fix/sessions-issuestest #change to -main when deploying,this is just for testing newer branches.
   workflow_dispatch: # allows manual trigger too
 
 jobs:
