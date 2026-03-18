@@ -3,7 +3,8 @@ name: Suraksha to Stree
 on:
   push:
     branches:
-      - main     #change to -main when deploying,this is just for testing newer branches.
+      - main
+      - fix-sessions-issuestest #change to -main when deploying,this is just for testing newer branches.
   workflow_dispatch: # allows manual trigger too
 
 jobs:
