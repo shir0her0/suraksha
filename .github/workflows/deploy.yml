@@ -3,7 +3,8 @@ name: Suraksha to Stree
 on:
   push:
     branches:
-      - main  # or 'master' if you use that
+      - main
+      - fix/sessions-issuestest
   workflow_dispatch: # allows manual trigger too
 
 jobs:
